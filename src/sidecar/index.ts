@@ -1,9 +1,11 @@
 import axios, { AxiosRequestHeaders } from 'axios';
 import { Economy } from './economy';
+import { Incentive } from './incentive';
 
 // tops-chain sidecar url: https://topster-chain-sidecar-dev.deeper.network/
 export class Sidecar {
-    public economy: Economy;
+    readonly economy: Economy;
+    readonly incentive: Incentive;
 
     constructor(sideCarURL: string, timeoutMs: number = 10000, deviceId: string = '') {
         const headers: AxiosRequestHeaders = { 'Content-Type': 'application/json' }
@@ -18,5 +20,6 @@ export class Sidecar {
         });
 
         this.economy = new Economy(client);
+        this.incentive = new Incentive(client);
     }
 }

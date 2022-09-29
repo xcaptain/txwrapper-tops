@@ -6,14 +6,13 @@ import {
     UnsignedTransaction,
 } from '@substrate/txwrapper-core';
 
-export interface BurnEzdForWorkArgs extends Args {
-    sender: string;
-    reciever: string;
-    assetBalance: string | number;
+export interface WorkProofArgs extends Args {
+    account: string;
+    workValue: string | number;
 }
 
-export function burnEzdForWork(
-    args: BurnEzdForWorkArgs,
+export function workProof(
+    args: WorkProofArgs,
     info: BaseTxInfo,
     options: OptionsWithMeta
 ): UnsignedTransaction {
@@ -21,8 +20,8 @@ export function burnEzdForWork(
         {
             method: {
                 args,
-                name: 'burnEzdForWork',
-                pallet: 'economy',
+                name: 'workProof',
+                pallet: 'incentive',
             },
             ...info,
         },

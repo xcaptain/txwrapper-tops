@@ -6,14 +6,13 @@ import {
     UnsignedTransaction,
 } from '@substrate/txwrapper-core';
 
-export interface BurnEzdForWorkArgs extends Args {
-    sender: string;
-    reciever: string;
-    assetBalance: string | number;
+// TODO: not completed, not sure how to implement sudo
+export interface SudoArgs extends Args {
+    call: string;
 }
 
-export function burnEzdForWork(
-    args: BurnEzdForWorkArgs,
+export function sudo(
+    args: SudoArgs,
     info: BaseTxInfo,
     options: OptionsWithMeta
 ): UnsignedTransaction {
@@ -21,8 +20,8 @@ export function burnEzdForWork(
         {
             method: {
                 args,
-                name: 'burnEzdForWork',
-                pallet: 'economy',
+                name: 'sudo',
+                pallet: 'sudo',
             },
             ...info,
         },

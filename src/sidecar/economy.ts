@@ -15,7 +15,7 @@ export class Economy extends Base {
 
     async burnEzdForWork(keyPair: IKeyringPair, sender: string, receiver: string, assetBalance: string): Promise<string> {
         const { baseTxInfo, txOptions, metadataRpc, registry } = await this.getTransactionArgs(keyPair.address);
-        const unsigned = topsMethods.economy.burnEzdForWork({ sender, receiver, assetBalance }, baseTxInfo, txOptions);
+        const unsigned = topsMethods.economy.burnEzdForWork({ sender, reciever: receiver, assetBalance }, baseTxInfo, txOptions);
         const signingPayload = construct.signingPayload(unsigned, { registry });
         const signature = await this.signWith(keyPair, signingPayload, registry, metadataRpc);
         const tx = construct.signedTx(unsigned, signature, { metadataRpc, registry });
