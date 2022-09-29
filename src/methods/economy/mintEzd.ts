@@ -6,14 +6,13 @@ import {
     UnsignedTransaction,
 } from '@substrate/txwrapper-core';
 
-export interface EzdBurnedArgs extends Args {
-    dest: string;
-    value: string;
+export interface MintEzdArgs extends Args {
+    account: string;
+    ezdBalance: string | number;
 }
 
-// Define the method
-export function ezdBurned(
-    args: EzdBurnedArgs,
+export function mintEzd(
+    args: MintEzdArgs,
     info: BaseTxInfo,
     options: OptionsWithMeta
 ): UnsignedTransaction {
@@ -21,7 +20,7 @@ export function ezdBurned(
         {
             method: {
                 args,
-                name: 'ezdBurned',
+                name: 'mintEzd',
                 pallet: 'economy',
             },
             ...info,
