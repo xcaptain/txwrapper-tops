@@ -12,4 +12,10 @@ export class Incentive extends Base {
         const tx = construct.signedTx(unsigned, signature, { metadataRpc, registry });
         return await this.sendTx(tx);
     }
+
+    async userCurrentWorks(address: string): Promise<string> {
+        let value = await this.queryStorage<string>('incentive', 'userCurrentWorks', address);
+
+        return value;
+    }
 }

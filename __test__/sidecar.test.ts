@@ -8,8 +8,8 @@ beforeAll(async () => {
 
 test('can query ezd', async () => {
     let testSideCar = new Sidecar('https://topster-chain-sidecar-dev.deeper.network');
-    let val = await testSideCar.economy.burnedEzd('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
-    expect(val).toBe('0');
+    let val = await testSideCar.incentive.userCurrentWorks('5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y');
+    expect(val).toBe('14000000000000000000');
 });
 
 test('can burn', async () => {
