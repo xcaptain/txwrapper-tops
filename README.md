@@ -1,3 +1,13 @@
 # txwrapper-deeper
 
-Types definition for deeper-chain
+## build
+
+```bash
+npm i
+```
+
+## test
+
+```bash
+npm run test
+```
