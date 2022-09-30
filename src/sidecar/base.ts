@@ -18,13 +18,13 @@ interface IStorageResponse<T> {
 }
 
 export class Base {
-    public client: AxiosInstance;
+    private client: AxiosInstance;
 
     constructor(client: AxiosInstance) {
         this.client = client;
     }
 
-    async queryStorage<T>(pallet: string, storage: string, key: string): Promise<T> {
+    protected async queryStorage<T>(pallet: string, storage: string, key: string): Promise<T> {
         const res = await this.client.get<IStorageResponse<T>>(`/pallets/${pallet}/storage/${storage}`, {
             params: {
                 key1: key,
@@ -34,17 +34,17 @@ export class Base {
         return res.data.value;
     }
     
-    async getLatestBlock(): Promise<IBlockHeader> {
+    private async getLatestBlock(): Promise<IBlockHeader> {
         const res = await this.client.get<IBlockHeaderResponse>('/blocks/head');
         return convertBlockHeader(res.data);
     }
 
-    async getAccountBalanceInfo(address: string): Promise<IAccountBalance> {
+    private async getAccountBalanceInfo(address: string): Promise<IAccountBalance> {
         const res = await this.client.get<IAccountBalanceResponse>(`/accounts/${address}/balance-info`);
         return convertAccountBalance(res.data);
     }
 
-    async signWith(pair: IKeyringPair, signingPayload: string, registry: TypeRegistry, metadataRpc: `0x${string}`): Promise<`0x${string}`> {
+    protected async signWith(pair: IKeyringPair, signingPayload: string, registry: TypeRegistry, metadataRpc: `0x${string}`): Promise<`0x${string}`> {
         registry.setMetadata(createMetadata(registry, metadataRpc));
 
         const { signature } = registry
@@ -56,14 +56,14 @@ export class Base {
         return signature;
     }
 
-    async sendTx(signedTx: string): Promise<string> {
+    protected async sendTx(signedTx: string): Promise<string> {
         const res = await this.client.post('/transaction', {
             tx: signedTx,
         }); // TODO: 处理交易异常情况
         return res.data.hash;
     }
 
-    async getTransactionArgs(address: string) {
+    protected async getTransactionArgs(address: string) {
         const {
             specVersion,
             txVersion: transactionVersion,
@@ -104,7 +104,7 @@ export class Base {
         };
     }
 
-    async getTransactionMaterial(): Promise<ITransactionMaterial> {
+    private async getTransactionMaterial(): Promise<ITransactionMaterial> {
         const res = await this.client.get<ITransactionMaterialResponse>('/transaction/material', {
             params: {
                 metadata: 'scale',
